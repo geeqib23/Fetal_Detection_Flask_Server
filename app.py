@@ -1,11 +1,11 @@
 import numpy as np
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pickle
 import pandas as pd
 from io import StringIO
 from preprocessing import extract_features
 
-app = Flask(__name__)
+app = Flask(__name__, '/static')
 # Load the model
 model = pickle.load(open("model.sav", 'rb'))
 N = 60
@@ -37,7 +37,7 @@ def predict():
 
 @app.route('/',methods=['GET'])
 def index():
-    return jsonify({"API TEST SUCCESS":"True"})
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run()
