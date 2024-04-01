@@ -22,14 +22,14 @@ async function BLEManager() {
       const device = await navigator.bluetooth.requestDevice({
         filters: [{
           name: deviceNameInput.value,
-          services: ['6e400003-b5a3-f393-e0a9-e50e24dcca9e']
+          services: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e']
         }]
       });
       error_code = 1
       const connectedDevice = await device.gatt.connect();
       connectionStatus.textContent = "CONNECTED";
       error_code = 2
-      const outputService = await connectedDevice.getPrimaryService("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
+      const outputService = await connectedDevice.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
       console.log("Services obtained")
       error_code = 3
       const outputCharacteristic = await outputService.getCharacteristic("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
