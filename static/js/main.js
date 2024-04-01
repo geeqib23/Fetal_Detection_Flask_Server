@@ -22,17 +22,17 @@ async function BLEManager() {
       const device = await navigator.bluetooth.requestDevice({
         filters: [{
           name: deviceNameInput.value,
-          services: ['6E400003-B5A3-F393-E0A9-E50E24DCCA9E']
+          services: ['6e400003-b5a3-f393-e0a9-e50e24dcca9e']
         }]
       });
       error_code = 1
       const connectedDevice = await device.gatt.connect();
       connectionStatus.textContent = "CONNECTED";
       error_code = 2
-      const outputService = await connectedDevice.getPrimaryService("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+      const outputService = await connectedDevice.getPrimaryService("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
       console.log("Services obtained")
       error_code = 3
-      const outputCharacteristic = await outputService.getCharacteristic("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+      const outputCharacteristic = await outputService.getCharacteristic("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
       console.log("Characteristics discovered")
       error_code = 4
       const output = await outputCharacteristic.readValue();
@@ -42,8 +42,9 @@ async function BLEManager() {
       const outputCharge = document.getElementById("output");
       outputCharge.textContent = outputConv.toString();
     }
-    catch {
+    catch(e) {
       console.log("err_code",error_code)
+      console.log(e)
       if (typeof device !== 'undefined') {
         connectionStatus.textContent = "CONNECTION FAILED";
       }
