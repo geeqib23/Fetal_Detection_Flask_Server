@@ -35,7 +35,7 @@ def predict():
         return f'Error: {str(e)}'
 
 
-@app.route('/api',methods=['GET'])
+@app.route('/',methods=['GET'])
 def index():
     return jsonify({"API TEST SUCCESS":"True"})
 
