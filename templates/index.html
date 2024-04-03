@@ -22,46 +22,51 @@
 
   <main>
     <div class="row">
-        <div class="col-10">
+        <div class="col-6">
           <input class="form-control" id="deviceNameInput" placeholder="Enter device name">
         </div>
-        <div class="col-2">
+        <div class="col-4">
           <button type="button" id="controlButton" class="btn btn-primary">Connect</button>
+        </div>
+    </div>
+
+      <div class="row">
+        <div class="col-6 gy-4">
+          <h5>Bluetooth State</h5>
+        </div>
+        <div class="col-4 gy-4">
+          <h5 class="text-muted" id="bluetoothState">Checking</h5>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-3 gy-4">
-          <h5>Bluetooth State</h5>
-        </div>
-        <div class="col-9 gy-4">
-          <h5 id="bluetoothState">checking</h5>
-        </div>
-
-        <div class="col-3 gy-4">
+        <div class="col-6 gy-4">
           <h5>Connection Status</h5>
         </div>
-        <div class="col-9 gy-4">
-          <h5 id="connectionStatus">IDLE</h5>
+        <div class="col-4 gy-4">
+          <h5 class="text-muted" id="connectionStatus">IDLE</h5>
         </div>
+      </div>
 
         <div class="row">
             <div class="col-6 gy-4 text-center">
               <i class="fa-solid fa-heart fa-2x"></i>
               <div>
-                <h4>No. of movements : </h4>
-                <h4 id="output">...</h4>
+                <h4>No. of movements</h4>
+                <h4 class="text-muted" id="output">...</h4>
               </div>
             </div>
             <div class="col-6 gy-4 text-center">
               <i class="fa-solid fa-bolt fa-2x"></i>
-              <h4 id="batteryCharge">100%</h4>
+              <div>
+                <h4>Battery</h4>
+                <h4 class="text-primary" id="batteryCharge">100%</h4>
+              </div>
             </div>
         </div>
-      </div>
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
-    Created by Aqib &middot; &copy; 2021
+    Created by Aqib &middot; &copy; 2024
   </footer>
 </div>
 <script src="{{ url_for('static', filename= 'js/main.js') }}"></script>      
