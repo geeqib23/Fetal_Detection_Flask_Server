@@ -3,7 +3,12 @@ const input = document.getElementById("input")
 const connectionStatus = document.getElementById("connectionStatus")
 const bs = document.getElementById('bluetoothState')
 const outputText = document.getElementById("output")
-
+const sendButton = document.getElementById("sendButton")
+const inputTime = document.getElementById("inputTime")
+const startButton = document.getElementById("startButton")
+const predictButton = document.querySelector(".predictButton")
+const sendArea  = document.querySelector(".sendArea")
+sendArea.style.display = "none"
 
 // const dataPoints1 = [{x:0,y:1233},{x:1,y:1263},{x:3,y:1933},{x:4,y:2233}]
 // const dataPoints2 = [{x:0,y:123},{x:1,y:263},{x:3,y:933},{x:4,y:223}]
@@ -26,7 +31,6 @@ const chart = new CanvasJS.Chart("chartContainer", {
   },
   axisY:{
     title: "Acceleration",
-    prefix: ""
   }, 
   toolTip: {
     shared: true
@@ -74,7 +78,6 @@ const updateChart = function (a1,a2,a3,a4) {
     dataPoints4.shift();				
   }
   chart.render();		
-// update chart after specified time. 
 }
 
 
@@ -123,9 +126,11 @@ var writeValue = function () {
 					writeCharacteristic.writeValueWithoutResponse(encoder.encode(input.value))
 				  resolve()
 			} else {
+        alert("No write characteristic ")
 				reject("No write characteristic")
 			}
 		} else {
+      alert("No devices paired")
 			reject("No devices paired.")
 		}
 	}).catch(error => { 
@@ -134,6 +139,52 @@ var writeValue = function () {
 	return p
 }
 
+const startMeasurement = () => {
+  p = new Promise(function (resolve, reject) {
+		// See if the device is paired.
+		if (pairedDevices) {
+			// Has a write reference been discovered.
+			if (writeCharacteristic != null) {
+					let encoder = new TextEncoder('utf-8')
+          let msg = encoder.encode("start,"+inputTime.value.toString())
+					writeCharacteristic.writeValueWithoutResponse(msg)
+				  resolve()
+			} else {
+        alert("No write characteristic ")
+				reject("No write characteristic")
+			}
+		} else {
+      alert("No devices paired")
+			reject("No devices paired.")
+		}
+	}).catch(error => { 
+    console.log(error)
+	})
+	return p
+}
+
+const predictResult = () => {
+  p = new Promise(function (resolve, reject) {
+		// See if the device is paired.
+		if (pairedDevices) {
+			// Has a write reference been discovered.
+			if (writeCharacteristic != null) {
+					let encoder = new TextEncoder('utf-8')
+					writeCharacteristic.writeValueWithoutResponse(encoder.encode("predict"))
+				  resolve()
+			} else {
+        alert("No write characteristic ")
+				reject("No write characteristic")
+			}
+		} else {
+      alert("No devices paired")
+			reject("No devices paired.")
+		}
+	}).catch(error => { 
+    console.log(error)
+	})
+	return p
+}
 
 async function BLEManager() {
     connectionStatus.textContent = "SEARCHING"
@@ -182,12 +233,32 @@ async function BLEManager() {
     }
     
   }
+
+
   controlButton.addEventListener("click", BLEManager)
   sendButton.addEventListener("click", writeValue)
+  startButton.addEventListener("click", async () =>{
+    try{ 
+      await startMeasurement()
+      outputText.textContent = "Loading..."
+      inputTime.disabled = true
+      const predictButton = document.createElement('button')
+      predictButton.textContent = "Predict"
+      predictButton.disabled = true
+      setTimeout(() =>{
+        predictButton.disabled = false
+      }, parseInt(inputTime.value)*1000);
+      predictButton.classList.add('predictButton', 'btn', 'btn-success')
+      predictButton.addEventListener("click", predictResult)
+      startButton.replaceWith(predictButton)
+    }
+    catch(e){
+      console.log(e)
+    }
 
-  // const output = await readCharacteristic.readValue()
-  // console.log(output)
-  // const t = output.buffer
-  // console.log(t)
-  // consoutputT text = document.getElementById("output")
-  // text.textContent = output.toString()
+  }
+  )
+
+  outputText.addEventListener("click", () =>{
+    sendArea.style.display = "flex"
+  })

@@ -28,14 +28,15 @@
           </div>
         </div>
 
-    <div class="row">
-        <div class="col-6">
-          <input class="form-control" id="input" placeholder="">
-        </div>
-        <div class="col-4">
-          <button type="button" id="sendButton" class="btn btn-secondary">Send</button>
+      <div class="row">
+        <div class="input-group col-6 mb-3">
+          <input type="number" id="inputTime" class="form-control" placeholder="Duration of measurement">
+          <span class="input-group-text" id="basic-addon2">sec</span>
+          <button class="btn btn-sucess btn-outline-secondary" type="button" id="startButton">Start</button>
         </div>
       </div>
+
+   
       
       <div class="row">
         <div class="col-6 gy-4">
@@ -73,10 +74,19 @@
               </div>
             </div>
         </div>
-  </main>
-  <footer class="pt-5 my-5 text-muted border-top">
-    Created by Aqib &middot; &copy; 2024
-  </footer>
+
+      </main>
+      <footer class="pt-2 my-5 text-muted border-top">
+        Created by Aqib &middot; &copy; 2024
+      </footer>
+      <div class="sendArea row my-5">
+        <div class="col-6">
+          <input class="form-control" id="input" placeholder="">
+        </div>
+        <div class="col-4">
+          <button type="button" id="sendButton" class="btn btn-secondary">Send</button>
+        </div>
+      </div>
 </div>
 <script src="{{ url_for('static', filename= 'js/main.js') }}"></script>      
   </body>
